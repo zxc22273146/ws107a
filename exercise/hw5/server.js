@@ -15,6 +15,7 @@ router
   .get('/post/new', add)
   .get('/post/:id', show)
   .get('/edit/:id', edit)
+  .get('/delete/:id', remove)
   .post('/save/:id', save)
   .post('/post', create)
 
@@ -36,14 +37,21 @@ async function show (ctx) {
   ctx.body = await V.show(post)
 }
 
-async function edit (ctx) {
+async function edit (ctx) {     //編輯貼文
   const id = ctx.params.id
   const post = M.get(id)
   if (!post) ctx.throw(404, 'invalid post id')
   ctx.body = await V.edit(post)
 }
 
-async function save (ctx) {
+async function remove (ctx) {   //刪除貼文
+  const id = ctx.params.id
+  const post = M.remove(id)
+  if (!post) ctx.throw(404, 'invalid post id')
+  ctx.redirect('/')
+}
+
+async function save (ctx) {     //保存修改
   const id = ctx.params.id
   const oldpost = M.get(id)
   const post = ctx.request.body

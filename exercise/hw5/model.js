@@ -21,3 +21,12 @@ M.save = function (post) {
   post.created_at = oldpost.created_at
   posts[post.id] = post
 }
+
+M.remove = function (id) {
+  let post = posts[id]
+  for(i=id;i<posts.length;i++){
+    posts[i].id = i-1
+  }
+  posts.splice(id,1)
+  return post
+}

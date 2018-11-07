@@ -104,14 +104,15 @@ V.edit = function (post) {
   <form action="/save/${post.id}" method="post">
     <p><input type="text" value="${post.title}" name="title"></p>
     <p><textarea name="body">${post.body}</textarea></p>
-    <p><input type="submit" value="確認編輯"></p>
+    <p><input type="submit" value="保存"></p>
   </form>
   `)
 }
 
 V.show = function (post) {
   return V.layout(post.title, `
-    <a href="/edit/${post.id}">編輯<a>
+    <a href="/edit/${post.id}">編輯貼文<a>
+    <a href="/delete/${post.id}">刪除貼文<a>
     <h1>${post.title}</h1>
     <p>${post.body}</p>
   `)
