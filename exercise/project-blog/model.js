@@ -4,7 +4,7 @@ const posts = []
 
 const users = []
 const test = []
-let trigger = false
+let trigger = "訪客"
 
 M.add = function (post) {
   const id = posts.push(post) - 1
