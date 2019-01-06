@@ -24,7 +24,12 @@ M.listBoards = async function () {
 
 M.login = async function (user, password) {
   let profile = await M.profiles.findOne({user: user})
-  return (profile.password === password)
+  if (profile == null) {
+    return false
+  }
+  else {
+    return (profile.password === password)
+  }
 }
 
 M.signup = async function (user) {
