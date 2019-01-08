@@ -114,7 +114,11 @@ async function addPost (ctx) {
   const board = ctx.params.board
   const post = ctx.request.body
   let isSuccess = await M.addPost(ctx.session.user, board, post)
-  if (isSuccess) {
+  if (isSuccess == "wronguser") {
+    ctx.status = 401
+    ctx.body = V.fail(ctx)
+  }
+  else if (isSuccess) {
     ctx.redirect(`/${board}/posts`)
   } else {
     ctx.status = 401

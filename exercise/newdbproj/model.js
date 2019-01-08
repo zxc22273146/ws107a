@@ -52,11 +52,12 @@ M.saveProfile = async function (profile) {
 }
 
 M.boardPosts = async function (board) {
-  const posts = await M.posts.find({board: board}).sort({created_at: -1}).toArray()
+  const posts = await M.posts.find({board: board}).sort({created_at: 1}).toArray()
   return posts
 }
 
 M.addPost = async function (user, board, post) {
+  if (user != board) return "wronguser"
   if (user == null) return false
   if (post.file == null) throw Error('addPost: file == null')
   post.user = user

@@ -19,7 +19,7 @@ V.layout = function (title, content, ctx) {
             
             ${(user == null) ? '<a href="/signup">註冊</a>' : ''}
             ${(user == null) ? '<a href="/login">登入</a>' : '<a href="/logout">登出</a>'}
-            ${(user != null) ? '<a href="/profile">個人檔案</a>' : ''}
+            
             <a href="/" style="color:#33FFFF">回首頁</a>
           </div>
           <div class="navbar" style="float:right">
@@ -57,7 +57,7 @@ V.layout = function (title, content, ctx) {
 V.listBoards = function (boards, ctx) {
   let list = []
   for (let board of boards) {
-    list.push(`<li><a href="/${board.board}/posts">${board.board} 留言板</a></li>`)
+    list.push(`<li style="font-size:40px"><a href="/${board.board}/posts">${board.board} 留言板</a></li>`)
   }
   return V.layout(`所有留言板列表`, `<ol>${list.join('\n')}</ol>`, ctx)
 }
@@ -84,7 +84,7 @@ V.showSignup = function (ctx) {
 }
 
 V.logout = function (ctx) {
-  return V.layout('登出成功！', '登出成功', ctx)
+  return V.layout('登出', '登出', ctx)
 }
 
 V.boardLayout = function (board, title, content, ctx) {
@@ -92,11 +92,11 @@ V.boardLayout = function (board, title, content, ctx) {
 }
 
 V.fail = function (ctx) {
-  return V.layout('失敗！', '失敗！', ctx)
+  return V.layout('錯誤', '未登入，或是留言板錯誤', ctx)
 }
 
 V.success = function (ctx) {
-  return V.layout('成功！', '成功！', ctx)
+  return V.layout('成功', '成功', ctx)
 }
 
 V.boardPosts = function (board, posts, ctx) {
@@ -104,7 +104,7 @@ V.boardPosts = function (board, posts, ctx) {
   let list = []
   for (let post of posts) {
 //    list.push(`<li><a href="/${post.user}/posts">웃</a> : <a href="/${post.board}/post/${post.file}">${post.title}</a></li>`)
-    list.push(`<li><a href="/${post.board}/post/${post.file}">${post.title}</a></li>`)
+    list.push(`<li style="font-size:40px"><a href="/${post.board}/post/${post.file}">${post.title}</a></li>`)
   }
   /*
     ${(user === ctx.session.user) ? '<p><a href="/' + user + '/post/new"><button>創建新貼文</button></a></p>' : ''}
