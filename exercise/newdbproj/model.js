@@ -41,15 +41,15 @@ M.addUser = async function (passport) {
   await M.profiles.insertOne(passport)
   await M.boards.insertOne({board: passport.user})
 }
-
+/*
 M.getProfile = async function (user) {
   let profile = await M.profiles.findOne({user: user})
   return profile
-}
-
+}*/
+/*
 M.saveProfile = async function (profile) {
   await M.profiles.updateOne({user: profile.user}, {$set: profile}, { upsert: false })
-}
+}*/
 
 M.boardPosts = async function (board) {
   const posts = await M.posts.find({board: board}).sort({created_at: 1}).toArray()
@@ -59,7 +59,7 @@ M.boardPosts = async function (board) {
 M.addPost = async function (user, board, post) {
   if (user != board) return "wronguser"
   if (user == null) return false
-  if (post.file == null) throw Error('addPost: file == null')
+  //if (post.file == null) throw Error('addPost: file == null')
   post.user = user
   post.board = board
   post.created_at = new Date()
@@ -68,7 +68,12 @@ M.addPost = async function (user, board, post) {
   return result.insertedId != null
 }
 
-M.getPost = async function (board, file) {
-  let post = await M.posts.findOne({board: board, file: file})
+M.getPost = async function (board, _id) {
+  let post = await M.posts.findOne({board: board, "_id": new mongodb.ObjectID(_id)})
+  return post
+}
+
+M.remove = async function (_id){
+  let post = await M.posts.deleteOne({"_id": new mongodb.ObjectID(_id)})
   return post
 }

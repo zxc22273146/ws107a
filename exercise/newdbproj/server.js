@@ -38,12 +38,13 @@ router
   .get('/logout', logout)
   .post('/login', login)
   .post('/signup', signup)
-  .post('/profile', saveProfile)
+  //.post('/profile', saveProfile)
   .get('/boards', listBoards)
   .get('/:board/posts', boardPosts)
   .get('/:board/post/new', showAddPost)
-  .get('/:board/post/:file', getPost)
+  .get('/:board/post/:_id', getPost)
   .post('/:board/post/', addPost)
+  .get('/delete/:_id', remove)
 
 app.use(router.routes())
 
@@ -105,9 +106,15 @@ async function showAddPost (ctx) {
 }
 
 async function getPost (ctx) {
-  const post = await M.getPost(ctx.params.board, ctx.params.file)
+  const post = await M.getPost(ctx.params.board, ctx.params._id)
   if (!post) ctx.throw(404, 'invalid post')
   ctx.body = await V.getPost(post, ctx)
+}
+
+async function remove (ctx) {
+  const post = await M.remove(ctx.params._id)
+  if (!post) ctx.throw(404, 'invalid post')
+  ctx.body = V.success(ctx)
 }
 
 async function addPost (ctx) {
@@ -125,12 +132,12 @@ async function addPost (ctx) {
     ctx.body = V.fail(ctx)
   }
 }
-
+/*
 async function saveProfile (ctx) {
   const profile = ctx.request.body
   await M.saveProfile(profile)
   ctx.body = V.success(ctx)
-}
+}*/
 
 app.stop = async function () {
   await M.close()

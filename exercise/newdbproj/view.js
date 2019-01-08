@@ -92,7 +92,7 @@ V.boardLayout = function (board, title, content, ctx) {
 }
 
 V.fail = function (ctx) {
-  return V.layout('錯誤', '未登入，或是留言板錯誤', ctx)
+  return V.layout('錯誤', '未登入，或是帳號錯誤', ctx)
 }
 
 V.success = function (ctx) {
@@ -104,7 +104,7 @@ V.boardPosts = function (board, posts, ctx) {
   let list = []
   for (let post of posts) {
 //    list.push(`<li><a href="/${post.user}/posts">웃</a> : <a href="/${post.board}/post/${post.file}">${post.title}</a></li>`)
-    list.push(`<li style="font-size:40px"><a href="/${post.board}/post/${post.file}">${post.title}</a></li>`)
+    list.push(`<li style="font-size:40px"><a href="/${post.board}/post/${post._id}">${post.title}</a></li>`)
   }
   /*
     ${(user === ctx.session.user) ? '<p><a href="/' + user + '/post/new"><button>創建新貼文</button></a></p>' : ''}
@@ -137,7 +137,7 @@ V.showAddPost = function (board, ctx) {
     <p><input type="text" placeholder="Title" name="title" size="40" style="width:100%"></p>
     <p><textarea placeholder="Contents" name="body"></textarea></p>
     <p>
-      <input type="text" placeholder="File" name="file" size="10" value="">
+      
       <input type="submit" value="儲存"/>
     </p>
   </form>
@@ -146,6 +146,7 @@ V.showAddPost = function (board, ctx) {
 
 V.getPost = function (post, ctx) {
   return V.boardLayout(post.board, post.title, `
+    <p><a href="/delete/${post._id}" style="color:#FF0000">刪除貼文</a></p>
     <h2>${post.title}</h2>
     <p>${post.body}</p>
   `, ctx)
